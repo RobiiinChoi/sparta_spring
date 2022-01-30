@@ -20,6 +20,10 @@ public class Course extends TimeStamped{
     @Column(nullable = false)
     private String tutor;
 
+    public Long getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -31,5 +35,10 @@ public class Course extends TimeStamped{
     public Course(String title, String tutor) {
         this.title = title;
         this.tutor = tutor;
+    }
+
+    public void update(Course course){
+        this.title = course.title;
+        this.tutor = course.tutor;
     }
 }

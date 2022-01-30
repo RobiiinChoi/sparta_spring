@@ -22,20 +22,20 @@ public class Week2Application {
     @Bean
     public CommandLineRunner demo(CourseRepository repository){
         return (args) -> {
-            // 객체 삽입 (insert)
-            Course course1 = new Course("웹개발의 봄", "남병관");
-            // 객체 저장
-            repository.save(course1);
+            repository.save(new Course("프론트엔드의 꽃, 리액트", "임민영"));
 
-            // 객체 전체 찾아서 리스트 형태로 반환
+            // 데이터 전부 조회
             List<Course> courseList = repository.findAll();
-
-            // 리트스 출력
-            for (int i = 0; i<courseList.size(); i++ ){
-                Course c = courseList.get(i);
-                System.out.println(c.getTitle());
-                System.out.println(c.getTutor());
+            for (int i=0; i<courseList.size();i++){
+                Course course = courseList.get(i);
+                System.out.println(course.getId());
+                System.out.println(course.getTitle());
+                System.out.println(course.getTutor());
             }
+            // 아이디 조회 or Exception Handling
+            Course course = repository.findById(1L).orElseThrow(
+                    () -> new NullPointerException("해당 아이디가 존재하지 않습니다")
+           );
         };
     }
 }
