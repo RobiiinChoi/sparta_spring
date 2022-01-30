@@ -1,11 +1,13 @@
 package com.sparta.week2.domain;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
 
 
+@Getter // Lombok 게터
 @NoArgsConstructor // 기본 생성자 대신 생성
 @Entity // 테이블임을 노티
 public class Course extends TimeStamped{
@@ -20,25 +22,13 @@ public class Course extends TimeStamped{
     @Column(nullable = false)
     private String tutor;
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getTutor() {
-        return tutor;
-    }
-
     public Course(String title, String tutor) {
         this.title = title;
         this.tutor = tutor;
     }
 
-    public void update(Course course){
-        this.title = course.title;
-        this.tutor = course.tutor;
+    public void update(CourseRequestDto requestDto){
+        this.title = requestDto.getTitle();
+        this.tutor = requestDto.getTutor();
     }
 }
