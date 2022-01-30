@@ -43,6 +43,8 @@ public class Week2Application {
                 System.out.println(course.getTitle());
                 System.out.println(course.getTutor());
             }
+
+            courserepository.deleteAll();
         };
     }
 }
