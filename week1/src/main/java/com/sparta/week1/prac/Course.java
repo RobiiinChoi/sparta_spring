@@ -1,4 +1,4 @@
-package com.sparta.week1_lecture.prac;
+package com.sparta.week1.prac;
 
 public class Course {
     private String tutor;

@@ -1,6 +1,6 @@
-package com.sparta.week1_lecture.controller;
+package com.sparta.week1.controller;
 
-import com.sparta.week1_lecture.prac.Course;
+import com.sparta.week1.prac.Course;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
