@@ -243,31 +243,79 @@
         // 메모를 불러와서 보여줍니다.
         function getMessages() {
             // 1. 기존 메모 내용을 지웁니다.
+            $('#cards-box').empty();
             // 2. 메모 목록을 불러와서 HTML로 붙입니다.
+            $.ajax({
+                type:'GET',
+                url:'/api/memos',
+                success:function (response) {
+                    for(let i = 0; i<response.length; i++){
+                        let memo = response[i];
+                        let id = memo.id;
+                        let username = memo.username;
+                        let contents = memo.contents;
+                        let modifiedAt = memo.modifiedAt;
+
+                        addHTML(id, username, contents, modifiedAt);
+                    }
+                }
+            })
+
         }
 
         // 메모 하나를 HTML로 만들어서 body 태그 내 원하는 곳에 붙입니다.
         function addHTML(id, username, contents, modifiedAt) {
             // 1. HTML 태그를 만듭니다.
+            let tempHtml = `<div class="card">
+            <!-- date/username 영역 -->
+            <div class="metadata">
+                <div class="date">
+                    ${modifiedAt}
+                </div>
+                <div id="1-username" class="username">
+                    ${username}
+                </div>
+            </div>
+            <!-- contents 조회/수정 영역-->
+            <div class="contents">
+                <div id="${id}-contents" class="text">
+                    ${contents}
+                </div>
+                <div id="${id}-editarea" class="edit">
+                    <textarea id="${id}-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>
+                </div>
+            </div>
+            <!-- 버튼 영역-->
+            <div class="footer">
+                <img id="${id}-edit" onclick="editPost('${id}')" class="icon-start-edit" src="images/edit.png" alt="">
+                <img id="${id}-delete" onclick="deleteOne('${id}')" class="icon-delete" src="images/delete.png" alt="">
+                <img id="${id}-submit" onclick="submitEdit('${id}')" class="icon-end-edit" src="images/done.png" alt="">
+            </div>
+        </div>`
             // 2. #cards-box 에 HTML을 붙인다.
+            $('#cards-box').append(tempHtml);
         }
 
         // 메모를 생성합니다.
         function writePost() {
+            // 작성한 메모 불러오기
             let contents = $('#contents').val();
+            // 작성한 메모가 올바른지 확인
             if (isValidContents(contents) == false) {
                 return;
             }
+            // 익명 유저네임 만들기
             let username = genRandomName(10);
+            // 전달할 data를 Json으로 만들기
             let data = {'username': username, 'contents': contents};
 
             $.ajax({
                 type: "POST",
                 url: "/api/memos",
-                contentType: "application/json",
+                contentType: "application/json", // JSON 전달
                 data: JSON.stringify(data),
                 success: function (res) {
-                    alert('성공');
+                    alert('메세지가 성공적으로 작성되었습니다');
                     window.location.reload();
                 }
             });
