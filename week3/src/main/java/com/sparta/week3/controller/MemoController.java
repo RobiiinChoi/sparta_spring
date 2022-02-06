@@ -24,9 +24,9 @@ public class MemoController {
 
     @GetMapping("/api/memos")
     public List<Memo> readMemo() {
-        LocalDateTime start = LocalDateTime.now();
-        LocalDateTime end = LocalDateTime.now().minusDays(1);
-        return memoRepository.findAllByOrderByModifiedAtDesc(start, end);
+        LocalDateTime start = LocalDateTime.now().minusDays(1);
+        LocalDateTime end = LocalDateTime.now();
+        return memoRepository.findAllByModifiedAtBetweenOrderByModifiedAtDesc(start, end);
     }
 
     @DeleteMapping("/api/memos/{id}")
