@@ -175,23 +175,24 @@ function setMyprice() {
      * 5, 성공적으로 등록되었음을 알리는 alert를 띄운다.
      * 6. 창을 새로고침한다. window.location.reload();
      */
-    let price = $('#myprice').val();
-    if (price ==''){
+    let myprice = $('#myprice').val();
+    if (myprice ==''){
         alert("가격을 입력해주세요");
         $('#myprice').focus();
     }
     $.ajax({
-        type : 'PUT',
-        url : '/api/products/'+targetId,
+        type: "PUT",
+        url: `/api/products/${targetId}`,
         contentType: "application/json",
-        data : JSON.stringify({myprice : myprice}),
-        success : function (resposne){
+        data: JSON.stringify({myprice: myprice}),
+        success: function (response) {
+            // 4. 모달을 종료한다. $('#container').removeClass('active');
             $('#container').removeClass('active');
-            alert("성공적으로 등록되었습니다");
+            // 5. 성공적으로 등록되었음을 알리는 alert를 띄운다.
+            alert('성공적으로 등록되었습니다.');
+            // 6. 창을 새로고침한다. window.location.reload();
             window.location.reload();
         }
-
-
     })
 
 }
